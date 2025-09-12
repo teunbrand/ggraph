@@ -43,7 +43,6 @@ scale_edge_width_continuous <- function(
     transform = transform,
     guide = guide
   )
-  sc$scale_name <- 'width_c'
   sc$aesthetics <- 'edge_width'
   sc
 }
@@ -60,7 +59,6 @@ scale_edge_width_discrete <- function(...) {
     "Using {.field edge_width} for a discrete variable is not advised."
   )
   sc <- scale_size_ordinal(...)
-  sc$scale_name <- 'width_d'
   sc$aesthetics <- 'edge_width'
   sc
 }
@@ -92,7 +90,6 @@ scale_edge_width_binned <- function(
     trans = trans,
     guide = guide
   )
-  sc$scale_name <- 'width_b'
   sc$aesthetics <- 'edge_width'
   sc
 }
