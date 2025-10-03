@@ -50,7 +50,8 @@ set_graph_style(
   face = "plain",
   size = 11,
   text_size = 11,
-  text_colour = "black",
+  ink = "black",
+  text_colour = ink,
   ...
 )
 

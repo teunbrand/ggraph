@@ -234,13 +234,15 @@ set_graph_style <- function(
   face = 'plain',
   size = 11,
   text_size = 11,
-  text_colour = 'black',
+  ink = "black",
+  text_colour = ink,
   ...
 ) {
   style <- theme_graph(
     base_family = family,
     base_size = size,
     text_colour = text_colour,
+    ink = ink,
     ...
   )
   theme_set(style)
