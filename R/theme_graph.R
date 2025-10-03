@@ -29,6 +29,9 @@
 #' @param border Logical. Should border be drawn if a foreground colour is
 #' provided?
 #'
+#' @param ink,paper The colour for foreground and background respectively,
+#'   permeating to layer defaults when possible.
+#'
 #' @param family,base_family,title_family,subtitle_family,strip_text_family,caption_family The font to use for the different elements
 #'
 #' @param base_size,size,text_size,title_size,subtitle_size,strip_text_size,caption_size The size to use for the various text elements. `text_size` will be used as geom defaults
@@ -51,12 +54,14 @@
 theme_graph <- function(
   base_family = 'Arial Narrow',
   base_size = 11,
-  background = 'white',
+  ink = "black",
+  paper = "white",
+  background = paper,
   foreground = NULL,
   border = TRUE,
-  text_colour = 'black',
-  bg_text_colour = text_colour,
-  fg_text_colour = text_colour,
+  text_colour = ink,
+  bg_text_colour = ink,
+  fg_text_colour = ink,
   title_family = base_family,
   title_size = 18,
   title_face = 'bold',
@@ -78,7 +83,17 @@ theme_graph <- function(
   caption_colour = bg_text_colour,
   plot_margin = margin(30, 30, 30, 30)
 ) {
-  style <- theme_bw(base_size = base_size, base_family = base_family)
+  if (all(c("ink", "paper") %in% names(formals(theme_bw)))) {
+    style <- theme_bw(
+      base_size = base_size,
+      base_family = base_family,
+      ink = ink,
+      paper = paper
+    )
+  } else {
+    style <- theme_bw(base_size = base_size, base_family = base_family)
+  }
+
   style <- style +
     theme(
       text = element_text(colour = text_colour),
