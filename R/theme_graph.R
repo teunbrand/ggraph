@@ -228,6 +228,7 @@ th_no_axes <- function() {
 #'
 #' @param ... Parameters passed on the `theme_graph`
 #'
+#' @importFrom ggplot2 aes from_theme
 #' @export
 set_graph_style <- function(
   family = 'Arial Narrow',
@@ -245,49 +246,40 @@ set_graph_style <- function(
     ink = ink,
     ...
   )
-  theme_set(style)
   text_size <- text_size / .pt
+
+  if (exists("element_geom", asNamespace("ggplot2"))) {
+    # Set family/fontsize globally
+    style <- style + theme(geom = element_geom(
+      family = family,
+      fontsize = text_size
+    ))
+    new_settings <- aes(
+      family = from_theme(family),
+      size = from_theme(fontsize),
+      fontface = {{ face }}
+    )
+  } else {
+    new_settings <- aes(
+      famly = {{ family }},
+      size = {{ text_size }},
+      fontface = {{ face }}
+    )
+  }
+
+  theme_set(style)
 
   update_geom_defaults(
     GeomEdgePath,
-    list(
-      family = family,
-      fontface = face,
-      label_size = text_size
+    aes(
+      !!!new_settings[c("family", "fontface")],
+      label_size = !!new_settings[["size"]]
     )
   )
-  update_geom_defaults(
-    GeomText,
-    list(
-      family = family,
-      fontface = face,
-      size = text_size
-    )
-  )
-  update_geom_defaults(
-    GeomTextRepel,
-    list(
-      family = family,
-      fontface = face,
-      size = text_size
-    )
-  )
-  update_geom_defaults(
-    GeomLabel,
-    list(
-      family = family,
-      fontface = face,
-      size = text_size
-    )
-  )
-  update_geom_defaults(
-    GeomLabelRepel,
-    list(
-      family = family,
-      fontface = face,
-      size = text_size
-    )
-  )
+  update_geom_defaults(GeomText, new_settings)
+  update_geom_defaults(GeomTextRepel, new_settings)
+  update_geom_defaults(GeomLabel, new_settings)
+  update_geom_defaults(GeomLabelRepel, new_settings)
 }
 #' @rdname theme_graph
 #'
