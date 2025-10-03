@@ -291,8 +291,20 @@ set_graph_style <- function(
 #'
 #' @export
 unset_graph_style <- function() {
+  # replace by ggplot2#6629 mechanism at some point
   style <- theme_gray()
   theme_set(style)
+
+  if (exists("element_geom", asNamespace("ggplot2"))) {
+    # From 4.0.0 onward, updating with `NULL` will reset defaults
+    update_geom_defaults(GeomEdgePath, NULL)
+    update_geom_defaults(GeomText, NULL)
+    update_geom_defaults(GeomTextRepel, NULL)
+    update_geom_defaults(GeomLabel, NULL)
+    update_geom_defaults(GeomLabelRepel, NULL)
+    update_geom_defaults(GeomAxisHive, NULL)
+    return(invisible())
+  }
 
   update_geom_defaults(
     GeomEdgePath,
