@@ -246,13 +246,13 @@ set_graph_style <- function(
     ink = ink,
     ...
   )
-  text_size <- text_size / .pt
+  fontsize <- text_size / .pt
 
   if (exists("element_geom", asNamespace("ggplot2"))) {
     # Set family/fontsize globally
     style <- style + theme(geom = element_geom(
       family = family,
-      fontsize = text_size
+      fontsize = fontsize
     ))
     new_settings <- aes(
       family = from_theme(family),
@@ -262,7 +262,7 @@ set_graph_style <- function(
   } else {
     new_settings <- aes(
       famly = {{ family }},
-      size = {{ text_size }},
+      size = {{ fontsize }},
       fontface = {{ face }}
     )
   }
