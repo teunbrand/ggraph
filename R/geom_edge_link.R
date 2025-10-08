@@ -190,7 +190,7 @@ StatEdgeLink2 <- ggproto(
     if (empty(data)) {
       return(data)
     }
-    StatEdgeLink2$compute_layer(data, params, layout)
+    StatLink2$compute_layer(data, params, layout)
   },
   default_aes = aes(filter = TRUE)
 )
