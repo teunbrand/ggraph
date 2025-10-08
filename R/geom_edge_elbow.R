@@ -238,6 +238,7 @@ StatEdgeElbow <- ggproto(
   setup_data = function(data, params) {
     data <- StatFilter$setup_data(data, params)
     data <- remove_loop(data)
+    data
   },
   default_aes = aes(filter = TRUE),
   required_aes = c('x', 'y', 'xend', 'yend', 'circular', 'direction')
